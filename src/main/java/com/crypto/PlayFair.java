@@ -9,25 +9,39 @@ public class PlayFair
 {
     private CypherMessage cypherMessage;
     private Cipher cipher;
+    private Mode mode;
+    private static final int MAX_I = 4;
+    private static final int MAX_J = 4;
+    private static final int MIN_I = 0;
+    private static final int MIN_J = 0;
 
-//    public static void main(String[] args){
-//        PlayFair playFair = new PlayFair();
-//        System.out.println("Enter a message to encrypt:");
-//        InputStreamReader inputStreamReader = new InputStreamReader(System.in);
-//
-//        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-//        String input;
-//        try {
-//            while ( ! "EXIT".equals(input = bufferedReader.readLine()) ) {
-//                String output = playFair.convertMessageToDigraphs(input);
-//                if (null != output) {
-//                    System.out.println(output);
-//                }
-//            }
-//        } catch (IOException ioe) {
-//            System.out.println("An error has occurred");
-//        }
-//    }
+    public static void main(String[] args){
+        PlayFair playFair = new PlayFair();
+        InputStreamReader inputStreamReader = new InputStreamReader(System.in);
+
+        System.out.println("Enter a keyword:");
+
+        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+        String input;
+        try {
+            playFair.setCipher(new Cipher(bufferedReader.readLine()));
+        } catch (IOException ioe) {
+            System.out.println("Invalid keyword");
+        }
+
+        try {
+            while ( ! "EXIT".equals(input = bufferedReader.readLine()) ) {
+                System.out.println("Enter a message to encrypt, EXIT to finish:");
+                playFair.convertMessageToDigraphs(input);
+                String outText = playFair.encrypt();
+                if (null != outText) {
+                    System.out.println(outText);
+                }
+            }
+        } catch (IOException ioe) {
+            System.out.println("An error has occurred");
+        }
+    }
 
     public List<Digraph> convertMessageToDigraphs(String message) {
         cypherMessage = new CypherMessage(message);
@@ -111,14 +125,33 @@ public class PlayFair
 
     private Coordinate determineCoordinateForColumnRule(Coordinate coordinate) {
         Coordinate coordinateToRetrieve = new Coordinate();
-        if (coordinate.getI() == 4){
-            coordinateToRetrieve.setI(0);
+
+        if (this.mode == Mode.ENCRYPT) {
+            coordinateColumnRuleEncrypt(coordinate, coordinateToRetrieve);
+        } else if (this.mode == Mode.DECRYPT) {
+            coordinateColumnRuleDecrypt(coordinate, coordinateToRetrieve);
+        }
+        return coordinateToRetrieve;
+    }
+
+    private void coordinateColumnRuleDecrypt(Coordinate coordinate, Coordinate coordinateToRetrieve) {
+        if (coordinate.getI() == MIN_I){
+            coordinateToRetrieve.setI(MAX_I);
+            coordinateToRetrieve.setJ(coordinate.getJ() - 1);
+        } else {
+            coordinateToRetrieve.setI(coordinate.getI() - 1);
+            coordinateToRetrieve.setJ(coordinate.getJ());
+        }
+    }
+
+    private void coordinateColumnRuleEncrypt(Coordinate coordinate, Coordinate coordinateToRetrieve) {
+        if (coordinate.getI() == MAX_I){
+            coordinateToRetrieve.setI(MIN_I);
             coordinateToRetrieve.setJ(coordinate.getJ() + 1);
         } else {
             coordinateToRetrieve.setI(coordinate.getI() + 1);
             coordinateToRetrieve.setJ(coordinate.getJ());
         }
-        return coordinateToRetrieve;
     }
 
     private String encryptRowRule(Digraph digraph) {
@@ -134,14 +167,33 @@ public class PlayFair
 
     private Coordinate determineCoordinateForRowRule(Coordinate coordinate) {
         Coordinate coordinateToRetrieve = new Coordinate();
-        if (coordinate.getJ() == 4){
+        if (this.mode == Mode.ENCRYPT) {
+            coordinateRowRuleEncrypt(coordinate, coordinateToRetrieve);
+        } else if (this.mode == Mode.DECRYPT) {
+            coordinateRowRuleDecrypt(coordinate, coordinateToRetrieve);
+        }
+
+        return coordinateToRetrieve;
+    }
+
+    private void coordinateRowRuleDecrypt(Coordinate coordinate, Coordinate coordinateToRetrieve) {
+        if (coordinate.getJ() == MIN_J){
+            coordinateToRetrieve.setI(coordinate.getI() - 1);
+            coordinateToRetrieve.setJ(MAX_J);
+        } else {
+            coordinateToRetrieve.setI(coordinate.getI());
+            coordinateToRetrieve.setJ(coordinate.getJ() - 1);
+        }
+    }
+
+    private void coordinateRowRuleEncrypt(Coordinate coordinate, Coordinate coordinateToRetrieve) {
+        if (coordinate.getJ() == MAX_J){
             coordinateToRetrieve.setI(coordinate.getI() + 1);
-            coordinateToRetrieve.setJ(0);
+            coordinateToRetrieve.setJ(MIN_J);
         } else {
             coordinateToRetrieve.setI(coordinate.getI());
             coordinateToRetrieve.setJ(coordinate.getJ() + 1);
         }
-        return coordinateToRetrieve;
     }
 
     private Rule determineRule(Digraph digraph) {
@@ -172,9 +224,18 @@ public class PlayFair
         return lettersInRow;
     }
 
+    public void setMode(Mode mode) {
+        this.mode = mode;
+    }
+
     private enum Rule {
         ROW,
         COLUMN,
         RECTANGLE
+    }
+
+    public enum Mode {
+        ENCRYPT,
+        DECRYPT
     }
 }

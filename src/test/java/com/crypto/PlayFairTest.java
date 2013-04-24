@@ -3,6 +3,7 @@ package com.crypto;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.junit.Test;
 
 import java.util.List;
 
@@ -19,6 +20,17 @@ public class PlayFairTest {
     @Given("^the playfair cipher keyword is \"([^\"]*)\"$")
     public void the_playfair_cipher_keyword_is(String keyword) throws Throwable {
         playFair.setCipher(new Cipher(keyword));
+    }
+
+    @Given("^the playfair is in mode \"([^\"]*)\"$")
+    public void the_playfair_is_in_mode(String mode) throws Throwable {
+        if (mode.equals("encrypt")) {
+            playFair.setMode(PlayFair.Mode.ENCRYPT);
+        } else if (mode.equals("decrypt")) {
+            playFair.setMode(PlayFair.Mode.DECRYPT);
+        } else {
+            fail("Unexpected mode");
+        }
     }
 
     @When("^I enter \"([^\"]*)\"$")
