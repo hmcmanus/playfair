@@ -3,12 +3,25 @@ package com.crypto;
 public class Digraph {
 
     private char firstLetter;
-    private int firstLetterI;
-    private int firstLetterJ;
-
+    private Coordinate firstCoordinate;
     private char secondLetter;
-    private int secondLetterI;
-    private int secondLetterJ;
+    private Coordinate secondCoordinate;
+
+    public Coordinate getFirstCoordinate() {
+        return firstCoordinate;
+    }
+
+    public void setFirstCoordinate(Coordinate firstCoordinate) {
+        this.firstCoordinate = firstCoordinate;
+    }
+
+    public Coordinate getSecondCoordinate() {
+        return secondCoordinate;
+    }
+
+    public void setSecondCoordinate(Coordinate secondCoordinate) {
+        this.secondCoordinate = secondCoordinate;
+    }
 
     public char getSecondLetter() {
         return secondLetter;
@@ -28,37 +41,5 @@ public class Digraph {
 
     public String toString(){
         return Character.toString(firstLetter) + Character.toString(secondLetter);
-    }
-
-    public int getFirstLetterI() {
-        return firstLetterI;
-    }
-
-    public void setFirstLetterI(int firstLetterI) {
-        this.firstLetterI = firstLetterI;
-    }
-
-    public int getFirstLetterJ() {
-        return firstLetterJ;
-    }
-
-    public void setFirstLetterJ(int firstLetterJ) {
-        this.firstLetterJ = firstLetterJ;
-    }
-
-    public int getSecondLetterI() {
-        return secondLetterI;
-    }
-
-    public void setSecondLetterI(int secondLetterI) {
-        this.secondLetterI = secondLetterI;
-    }
-
-    public int getSecondLetterJ() {
-        return secondLetterJ;
-    }
-
-    public void setSecondLetterJ(int secondLetterJ) {
-        this.secondLetterJ = secondLetterJ;
     }
 }

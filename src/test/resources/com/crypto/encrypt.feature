@@ -9,4 +9,5 @@ Feature: Use the cipher
 
   Examples:
   | keyword | new-word | encryptedMessage |
-  | "PLAYFAIREXAMPLE" |"HELLO WORLD" | "BMODZBXDNABEKUDMUIXMMOUVIF" |
+  | "PLAYFAIREXAMPLE" |"HIDE THE GOLD IN THE TREE STUMP" | "BMODZBXDNABEKUDMUIXMMOUVIF" |
+  | "MONARCHY" |"BALLOON" | "IBSUPMNA" |

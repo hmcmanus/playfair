@@ -52,7 +52,129 @@ public class PlayFair
     }
 
     private String processDigraph(Digraph digraph) {
+        digraph.setFirstCoordinate(cipher.getLetterCoordinateInTable(digraph.getFirstLetter()));
+        digraph.setSecondCoordinate(cipher.getLetterCoordinateInTable(digraph.getSecondLetter()));
+        Rule digraphRule = determineRule(digraph);
+        return processRule(digraph, digraphRule);
+    }
 
-        return null;
+    private String processRule(Digraph digraph, Rule digraphRule) {
+        String encryptedDigraph = "";
+        switch (digraphRule) {
+            case ROW: encryptedDigraph = encryptRowRule(digraph);
+                break;
+            case COLUMN: encryptedDigraph = encryptColumnRule(digraph);
+                break;
+            case RECTANGLE: encryptedDigraph = encyrptRectangleRule(digraph);
+                break;
+            default: // throw exception
+        }
+        return encryptedDigraph;
+    }
+
+    private String encyrptRectangleRule(Digraph digraph) {
+        // Rectangle rule is when the digraph letters are in different columns and different rows in the table.
+        // You take the opposing corners of the rectangle and get the letters there
+        String encryptedDigraph = "" + cipher.getLetterAtCoordinate(
+                determineFirstCoordinateForRectangleRule(digraph));
+
+        encryptedDigraph = encryptedDigraph + cipher.getLetterAtCoordinate(
+                determineSecondCoordinateForRectangleRule(digraph));
+        return encryptedDigraph;
+    }
+
+    private Coordinate determineSecondCoordinateForRectangleRule(Digraph digraph) {
+        Coordinate coordinateToRetrieve = new Coordinate();
+        coordinateToRetrieve.setI(digraph.getSecondCoordinate().getI());
+        coordinateToRetrieve.setJ(digraph.getFirstCoordinate().getJ());
+        return coordinateToRetrieve;
+    }
+
+    private Coordinate determineFirstCoordinateForRectangleRule(Digraph digraph) {
+        Coordinate coordinateToRetrieve = new Coordinate();
+        coordinateToRetrieve.setI(digraph.getFirstCoordinate().getI());
+        coordinateToRetrieve.setJ(digraph.getSecondCoordinate().getJ());
+        return coordinateToRetrieve;
+    }
+
+
+    private String encryptColumnRule(Digraph digraph) {
+        // Column rule is when the digraph is in the same column and means that you shift the letters down
+        // wrapping around the next column if it's at the bottom of the table
+        String encryptedDigraph = "" + cipher.getLetterAtCoordinate(
+                determineCoordinateForColumnRule(digraph.getFirstCoordinate()));
+
+        encryptedDigraph = encryptedDigraph + cipher.getLetterAtCoordinate(
+                determineCoordinateForColumnRule(digraph.getSecondCoordinate()));
+        return encryptedDigraph;
+    }
+
+    private Coordinate determineCoordinateForColumnRule(Coordinate coordinate) {
+        Coordinate coordinateToRetrieve = new Coordinate();
+        if (coordinate.getI() == 4){
+            coordinateToRetrieve.setI(0);
+            coordinateToRetrieve.setJ(coordinate.getJ() + 1);
+        } else {
+            coordinateToRetrieve.setI(coordinate.getI() + 1);
+            coordinateToRetrieve.setJ(coordinate.getJ());
+        }
+        return coordinateToRetrieve;
+    }
+
+    private String encryptRowRule(Digraph digraph) {
+        // Row rule is when the digraph is in the same row and means that you shift the letters right
+        // wrapping around to the next column if it's at the end of the table
+        String encryptedDigraph = "" + cipher.getLetterAtCoordinate(
+                determineCoordinateForRowRule(digraph.getFirstCoordinate()));
+
+        encryptedDigraph = encryptedDigraph + cipher.getLetterAtCoordinate(
+                        determineCoordinateForRowRule(digraph.getSecondCoordinate()));
+        return encryptedDigraph;
+    }
+
+    private Coordinate determineCoordinateForRowRule(Coordinate coordinate) {
+        Coordinate coordinateToRetrieve = new Coordinate();
+        if (coordinate.getJ() == 4){
+            coordinateToRetrieve.setI(coordinate.getI() + 1);
+            coordinateToRetrieve.setJ(0);
+        } else {
+            coordinateToRetrieve.setI(coordinate.getI());
+            coordinateToRetrieve.setJ(coordinate.getJ() + 1);
+        }
+        return coordinateToRetrieve;
+    }
+
+    private Rule determineRule(Digraph digraph) {
+        Rule determinedRule;
+        if (isRowRule(digraph.getFirstCoordinate().getJ(), digraph.getSecondCoordinate().getJ())){
+            determinedRule = Rule.COLUMN;
+        } else if (isColumnRule(digraph.getFirstCoordinate().getI(), digraph.getSecondCoordinate().getI())) {
+            determinedRule = Rule.ROW;
+        } else {
+            determinedRule = Rule.RECTANGLE;
+        }
+        return determinedRule;
+    }
+
+    private boolean isRowRule(int firstLetterJ, int secondLetterJ) {
+        boolean lettersInColumn = false;
+        if (firstLetterJ == secondLetterJ) {
+            lettersInColumn = true;
+        }
+        return lettersInColumn;
+    }
+
+    private boolean isColumnRule(int firstLetterI, int secondLetterI) {
+        boolean lettersInRow = false;
+        if (firstLetterI == secondLetterI) {
+            lettersInRow = true;
+        }
+        return lettersInRow;
+    }
+
+    private enum Rule {
+        ROW,
+        COLUMN,
+        RECTANGLE
     }
 }

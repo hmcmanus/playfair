@@ -18,10 +18,6 @@ public class Cipher {
         buildTable();
     }
 
-    public String getKeyword() {
-        return keyword;
-    }
-
     public char[][] getTable() {
         return this.table;
     }
@@ -77,5 +73,28 @@ public class Cipher {
                 }
             }
         }
+    }
+
+    public Coordinate getLetterCoordinateInTable(char letter) {
+        Coordinate coordinate = new Coordinate();
+        boolean coordFound = false;
+        for (int i=0; i < 5; i++){
+            if (coordFound){
+                break;
+            }
+            for (int j=0;j<5;j++){
+                if (table[i][j] == letter){
+                    coordinate.setI(i);
+                    coordinate.setJ(j);
+                    coordFound = true;
+                    break;
+                }
+            }
+        }
+        return coordinate;
+    }
+
+    public char getLetterAtCoordinate(Coordinate coordinateToRetrieve) {
+        return table[coordinateToRetrieve.getI()][coordinateToRetrieve.getJ()];
     }
 }
