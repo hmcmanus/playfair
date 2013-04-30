@@ -55,8 +55,8 @@ public class PlayFairTest {
         assertEquals(output, allDigraphs);
     }
 
-    @Then("^it should be encrypted to be \"([^\"]*)\"$")
-    public void it_should_be_encrypted_to_be(String expectedEncryption) throws Throwable {
+    @Then("^the message should be \"([^\"]*)\"$")
+    public void the_message_should_be(String expectedEncryption) throws Throwable {
         String encryptedMessage = playFair.encrypt();
         assertEquals(expectedEncryption, encryptedMessage);
     }

@@ -62,6 +62,10 @@ public class PlayFair
         for (Digraph digraph:cypherMessage.getDigraphs()){
             encrpyted = encrpyted + processDigraph(digraph);
         }
+        // TODO: Remove the extra X in the decrypted message
+//        if (mode.equals(Mode.DECRYPT)) {
+//            encrpyted = cypherMessage.stripExtraX(encrpyted);
+//        }
         return encrpyted;
     }
 
@@ -137,7 +141,7 @@ public class PlayFair
     private void coordinateColumnRuleDecrypt(Coordinate coordinate, Coordinate coordinateToRetrieve) {
         if (coordinate.getI() == MIN_I){
             coordinateToRetrieve.setI(MAX_I);
-            coordinateToRetrieve.setJ(coordinate.getJ() - 1);
+            coordinateToRetrieve.setJ(coordinate.getJ());
         } else {
             coordinateToRetrieve.setI(coordinate.getI() - 1);
             coordinateToRetrieve.setJ(coordinate.getJ());
@@ -147,7 +151,7 @@ public class PlayFair
     private void coordinateColumnRuleEncrypt(Coordinate coordinate, Coordinate coordinateToRetrieve) {
         if (coordinate.getI() == MAX_I){
             coordinateToRetrieve.setI(MIN_I);
-            coordinateToRetrieve.setJ(coordinate.getJ() + 1);
+            coordinateToRetrieve.setJ(coordinate.getJ());
         } else {
             coordinateToRetrieve.setI(coordinate.getI() + 1);
             coordinateToRetrieve.setJ(coordinate.getJ());
@@ -178,7 +182,7 @@ public class PlayFair
 
     private void coordinateRowRuleDecrypt(Coordinate coordinate, Coordinate coordinateToRetrieve) {
         if (coordinate.getJ() == MIN_J){
-            coordinateToRetrieve.setI(coordinate.getI() - 1);
+            coordinateToRetrieve.setI(coordinate.getI());
             coordinateToRetrieve.setJ(MAX_J);
         } else {
             coordinateToRetrieve.setI(coordinate.getI());
@@ -188,7 +192,7 @@ public class PlayFair
 
     private void coordinateRowRuleEncrypt(Coordinate coordinate, Coordinate coordinateToRetrieve) {
         if (coordinate.getJ() == MAX_J){
-            coordinateToRetrieve.setI(coordinate.getI() + 1);
+            coordinateToRetrieve.setI(coordinate.getI());
             coordinateToRetrieve.setJ(MIN_J);
         } else {
             coordinateToRetrieve.setI(coordinate.getI());
@@ -198,9 +202,9 @@ public class PlayFair
 
     private Rule determineRule(Digraph digraph) {
         Rule determinedRule;
-        if (isRowRule(digraph.getFirstCoordinate().getJ(), digraph.getSecondCoordinate().getJ())){
+        if (isColumnRule(digraph.getFirstCoordinate(), digraph.getSecondCoordinate())){
             determinedRule = Rule.COLUMN;
-        } else if (isColumnRule(digraph.getFirstCoordinate().getI(), digraph.getSecondCoordinate().getI())) {
+        } else if (isRowRule(digraph.getFirstCoordinate(), digraph.getSecondCoordinate())) {
             determinedRule = Rule.ROW;
         } else {
             determinedRule = Rule.RECTANGLE;
@@ -208,17 +212,17 @@ public class PlayFair
         return determinedRule;
     }
 
-    private boolean isRowRule(int firstLetterJ, int secondLetterJ) {
+    private boolean isColumnRule(Coordinate firstLetter, Coordinate secondLetter) {
         boolean lettersInColumn = false;
-        if (firstLetterJ == secondLetterJ) {
+        if (firstLetter.getJ() == secondLetter.getJ()) {
             lettersInColumn = true;
         }
         return lettersInColumn;
     }
 
-    private boolean isColumnRule(int firstLetterI, int secondLetterI) {
+    private boolean isRowRule(Coordinate firstLetter, Coordinate secondLetter) {
         boolean lettersInRow = false;
-        if (firstLetterI == secondLetterI) {
+        if (firstLetter.getI() == secondLetter.getI()) {
             lettersInRow = true;
         }
         return lettersInRow;

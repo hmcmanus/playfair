@@ -10,6 +10,11 @@ Feature: Encrypt using the cipher
   Examples:
   | keyword | mode | new-word | encryptedMessage |
   | "PLAYFAIREXAMPLE" | "encrypt" | "HIDE THE GOLD IN THE TREE STUMP" | "BMODZBXDNABEKUDMUIXMMOUVIF" |
+  | "MONARCHY" | "encrypt" |  "QS" | "ST" |
+  | "MONARCHY" | "encrypt" |  "ST" | "TL" |
+  | "MONARCHY" | "encrypt" |  "HF" | "FP" |
+  | "MONARCHY" | "encrypt" |  "PV" | "VO" |
+  | "MONARCHY" | "encrypt" |  "RC" | "MD" |
   | "MONARCHY" | "encrypt" | "BALLOON" | "IBSUPMNA" |
-  | "MONARCHY" | "encrypt" | "ARTATTACK" | "RCSRSZSRDE" |
-  | "MONARCHY" | "encrypt" |  "ST" | "TU" |
+  | "MONARCHY" | "encrypt" | "ARTATTACK" | "RMSRSZSRDE" |
+  | "MONARCHY" | "encrypt" |  "ST" | "TL" |

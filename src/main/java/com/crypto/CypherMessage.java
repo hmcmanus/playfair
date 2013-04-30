@@ -44,4 +44,13 @@ public class CypherMessage {
         }
         return i;
     }
+
+    public String stripExtraX(String message) {
+        char[] charsInMessage = message.toCharArray();
+        for (int i=0; i<charsInMessage.length; i++) {
+            if (i+1 < charsInMessage.length && charsInMessage[i] == 'X' && charsInMessage[i-1] == charsInMessage[i+1]) {
+            }
+        }
+        return "";
+    }
 }

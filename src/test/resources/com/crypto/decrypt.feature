@@ -5,11 +5,15 @@ Feature: Decrypt using the cipher
        And the playfair cipher keyword is <keyword>
        And the playfair is in mode <mode>
       When I enter <new-word>
-      Then it should be encrypted to be <decryptedMessage>
+      Then the message should be <decryptedMessage>
 
     Examples:
   | keyword | mode |new-word | decryptedMessage |
   | "PLAYFAIREXAMPLE" | "decrypt" | "BMODZBXDNABEKUDMUIXMMOUVIF" | "HIDETHEGOLDINTHETREXESTUMP" |
-  | "MONARCHY" | "decrypt" | "IBSUPMNA" | "BALXLOON" |
-  | "MONARCHY" | "decrypt" | "RCSRSZSRDE" | "ARTATXTACK" |
-  | "MONARCHY" | "decrypt" |  "TU" | "ST" |
+  | "MONARCHY" | "decrypt" |  "ST" | "QS" |
+  | "MONARCHY" | "decrypt" |  "TL" | "ST" |
+  | "MONARCHY" | "decrypt" |  "FP" | "HF" |
+  | "MONARCHY" | "decrypt" |  "VO" | "PV" |
+  | "MONARCHY" | "decrypt" |  "MD" | "RC" |
+  | "MONARCHY" | "decrypt" | "IBSUPMNA" | "BALLOON" |
+  | "MONARCHY" | "decrypt" | "RMSRSZSRDE" | "ARTATTACK" |
