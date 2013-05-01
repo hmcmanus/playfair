@@ -47,10 +47,17 @@ public class CypherMessage {
 
     public String stripExtraX(String message) {
         char[] charsInMessage = message.toCharArray();
+        String strippedMessage = "";
         for (int i=0; i<charsInMessage.length; i++) {
-            if (i+1 < charsInMessage.length && charsInMessage[i] == 'X' && charsInMessage[i-1] == charsInMessage[i+1]) {
+            boolean addChar = true;
+            if (i+1 < charsInMessage.length && i-1 > 0 && charsInMessage[i] == 'X'
+                    && charsInMessage[i-1] == charsInMessage[i+1]) {
+                addChar = false;
+            }
+            if (addChar) {
+                strippedMessage = strippedMessage + charsInMessage[i];
             }
         }
-        return "";
+        return strippedMessage;
     }
 }

@@ -9,7 +9,7 @@ Feature: Decrypt using the cipher
 
     Examples:
   | keyword | mode |new-word | decryptedMessage |
-  | "PLAYFAIREXAMPLE" | "decrypt" | "BMODZBXDNABEKUDMUIXMMOUVIF" | "HIDETHEGOLDINTHETREXESTUMP" |
+  | "PLAYFAIREXAMPLE" | "decrypt" | "BMODZBXDNABEKUDMUIXMMOUVIF" | "HIDETHEGOLDINTHETREESTUMP" |
   | "MONARCHY" | "decrypt" |  "ST" | "QS" |
   | "MONARCHY" | "decrypt" |  "TL" | "ST" |
   | "MONARCHY" | "decrypt" |  "FP" | "HF" |

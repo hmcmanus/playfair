@@ -30,12 +30,25 @@ public class PlayFair
         }
 
         try {
-            while ( ! "EXIT".equals(input = bufferedReader.readLine()) ) {
-                System.out.println("Enter a message to encrypt, EXIT to finish:");
-                playFair.convertMessageToDigraphs(input);
-                String outText = playFair.encrypt();
-                if (null != outText) {
-                    System.out.println(outText);
+            while ( true ) {
+                System.out.println("Enter a mode, E for encrypt D for decrypt, Ctrl+C to exit:");
+                input = bufferedReader.readLine();
+                if (input.equals("E") || input.equals("D")) {
+                    if (input.equals("E")) {
+                        playFair.setMode(Mode.ENCRYPT);
+                    } else {
+                        playFair.setMode(Mode.DECRYPT);
+                    }
+                    System.out.println("Enter a message to use cipher on, Ctrl+C to exit:");
+                    input = bufferedReader.readLine();
+                    playFair.convertMessageToDigraphs(input);
+                    String outText = playFair.encrypt();
+                    if (null != outText) {
+                        System.out.println("Output of cipher is:");
+                        System.out.println(outText);
+                    }
+                } else {
+                    System.out.println("Invalid mode!");
                 }
             }
         } catch (IOException ioe) {
@@ -62,10 +75,9 @@ public class PlayFair
         for (Digraph digraph:cypherMessage.getDigraphs()){
             encrpyted = encrpyted + processDigraph(digraph);
         }
-        // TODO: Remove the extra X in the decrypted message
-//        if (mode.equals(Mode.DECRYPT)) {
-//            encrpyted = cypherMessage.stripExtraX(encrpyted);
-//        }
+        if (mode.equals(Mode.DECRYPT)) {
+            encrpyted = cypherMessage.stripExtraX(encrpyted);
+        }
         return encrpyted;
     }
 
