@@ -10,7 +10,7 @@ public class CypherMessage {
 
     public CypherMessage(String originalMessage){
         // First remove the whitespace from the message
-        this.originalMessage = originalMessage.replaceAll("\\s", "");
+        this.originalMessage = originalMessage.replaceAll("\\s", "").toUpperCase();
     }
 
     public List<Digraph> getDigraphs(){

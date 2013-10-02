@@ -5,7 +5,7 @@ Feature: Encrypt using the cipher
        And the playfair cipher keyword is <keyword>
        And the playfair is in mode <mode>
       When I enter <new-word>
-      Then it should be encrypted to be <encryptedMessage>
+    Then the message should be <encryptedMessage>
 
   Examples:
   | keyword | mode | new-word | encryptedMessage |
@@ -18,3 +18,7 @@ Feature: Encrypt using the cipher
   | "MONARCHY" | "encrypt" | "BALLOON" | "IBSUPMNA" |
   | "MONARCHY" | "encrypt" | "ARTATTACK" | "RMSRSZSRDE" |
   | "MONARCHY" | "encrypt" |  "ST" | "TL" |
+  | "POTATO" | "encrypt" |  "C PLUS PLUS IS CRAP" | "HCMSNAMSQLNFSTBV" |
+  | "POTATO" | "encrypt" |  "c plus plus is crap" | "HCMSNAMSQLNFSTBV" |
+  | "POTATO" | "encrypt" |  "cplusplusiscrap" | "HCMSNAMSQLNFSTBV" |
+  | "potato" | "encrypt" |  "cplusplusiscrap" | "HCMSNAMSQLNFSTBV" |

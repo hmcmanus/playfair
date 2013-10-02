@@ -17,3 +17,6 @@ Feature: Decrypt using the cipher
   | "MONARCHY" | "decrypt" |  "MD" | "RC" |
   | "MONARCHY" | "decrypt" | "IBSUPMNA" | "BALLOON" |
   | "MONARCHY" | "decrypt" | "RMSRSZSRDE" | "ARTATTACK" |
+  | "POTATO" | "decrypt" |  "HCMSNAMSQLNFSTBV" | "CPLUSPLUSISCRAPZ" |
+  | "POTATO" | "decrypt" |  "hcmsnamsqlnfstbv" | "CPLUSPLUSISCRAPZ" |
+  | "potato" | "decrypt" |  "hcmsnamsqlnfstbv" | "CPLUSPLUSISCRAPZ" |

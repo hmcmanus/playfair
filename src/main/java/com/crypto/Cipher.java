@@ -14,7 +14,7 @@ public class Cipher {
      * @param keyword Initialises the cipher
      */
     public Cipher(String keyword) {
-        this.keyword = keyword;
+        this.keyword = keyword.toUpperCase();
         buildTable();
     }
 
